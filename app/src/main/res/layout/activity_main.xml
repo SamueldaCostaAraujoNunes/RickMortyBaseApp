@@ -8,21 +8,6 @@
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:background="@color/colorPrimary">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ToolbarTheme"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            tools:title="Main" />
-    </com.google.android.material.appbar.AppBarLayout>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
