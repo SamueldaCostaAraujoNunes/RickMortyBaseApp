@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/characterFragment">
+
+    <fragment
+        android:id="@+id/placeholder2"
+        android:label="detalhes" />
+    <fragment
+        android:id="@+id/characterFragment"
+        android:name="br.com.samuelnunes.rickandmortyapp.ui.character.CharacterFragment"
+        android:label="CharacterFragment" >
+        <action
+            android:id="@+id/action_characterFragment_to_placeholder2"
+            app:destination="@id/placeholder2" />
+    </fragment>
+</navigation>
