@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/characterFragment">
 
     <fragment
-        android:id="@+id/placeholder2"
-        android:label="detalhes" />
-    <fragment
         android:id="@+id/characterFragment"
         android:name="br.com.samuelnunes.rickandmortyapp.ui.character.CharacterFragment"
-        android:label="CharacterFragment" >
+        android:label="Personagens"
+        tools:layout="@layout/character_fragment">
         <action
-            android:id="@+id/action_characterFragment_to_placeholder2"
-            app:destination="@id/placeholder2" />
+            android:id="@+id/action_characterFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailsFragment"
+        android:name="br.com.samuelnunes.rickandmortyapp.ui.characterDetails.CharacterDetailsFragment"
+        android:label="Detalhes do Personagem"
+        tools:layout="@layout/character_details_fragment" >
+        <argument
+            android:name="idCharacter"
+            app:argType="integer" />
     </fragment>
 </navigation>

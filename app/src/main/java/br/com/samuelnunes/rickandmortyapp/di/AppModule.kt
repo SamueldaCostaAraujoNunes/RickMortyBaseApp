@@ -1,10 +1,14 @@
 package br.com.samuelnunes.rickandmortyapp.di
 
+import android.content.Context
+import androidx.room.Room
+import br.com.samuelnunes.rickandmortyapp.data.local.AppDatabase
 import br.com.samuelnunes.rickandmortyapp.data.remote.CharacterService
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,4 +32,12 @@ object AppModule {
     @Provides
     fun provideCharacterService(retrofit: Retrofit): CharacterService =
         retrofit.create(CharacterService::class.java)
+
+    @Provides
+    @Singleton
+    fun database(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "characters.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 }

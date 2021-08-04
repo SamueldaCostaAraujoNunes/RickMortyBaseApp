@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RickAndMortyAPI</string>
+
+    <string name="character_status">Status: %1$s</string>
+    <string name="character_species">Specie: %1$s</string>
+    <string name="character_gender">Gender: %1$s</string>
+    <string name="character_type">Type: %1$s</string>
 </resources>

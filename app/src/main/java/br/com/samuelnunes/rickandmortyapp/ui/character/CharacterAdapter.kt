@@ -1,7 +1,9 @@
 package br.com.samuelnunes.rickandmortyapp.ui.character
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +15,7 @@ import br.com.samuelnunes.rickandmortyapp.extensions.url
  * @author Samuel da Costa Araujo Nunes
  * Created 03/08/2021 at 15:50
  */
-class CharacterAdapter : ListAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterAdapter) {
+class CharacterAdapter(private val listener: CharacterClickListener) : PagingDataAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterAdapter) {
 
     private companion object : DiffUtil.ItemCallback<Character>() {
         override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean = oldItem.id == newItem.id
@@ -25,7 +27,7 @@ class CharacterAdapter : ListAdapter<Character, CharacterAdapter.CharacterViewHo
         viewType: Int
     ): CharacterViewHolder {
         val binding = CharacterViewHolder.create(parent)
-        return CharacterViewHolder(binding)
+        return CharacterViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(
@@ -33,11 +35,26 @@ class CharacterAdapter : ListAdapter<Character, CharacterAdapter.CharacterViewHo
         position: Int
     ) {
         val item = getItem(position)
-        holder.bind(item)
+        if (item != null) {
+            holder.bind(item)
+        }
     }
 
-    class CharacterViewHolder(private val binding: ItemCharacterBinding) :
+    interface CharacterClickListener {
+        fun onClickedCharacter(character: Character)
+    }
+
+    class CharacterViewHolder(
+        private val binding: ItemCharacterBinding,
+        private val listener: CharacterClickListener) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private lateinit var character: Character
+        private val onClick = View.OnClickListener { listener.onClickedCharacter(character)}
+
+        init {
+            binding.root.setOnClickListener(onClick)
+        }
 
         companion object {
             fun create(parent: ViewGroup): ItemCharacterBinding =
@@ -46,6 +63,7 @@ class CharacterAdapter : ListAdapter<Character, CharacterAdapter.CharacterViewHo
         }
 
         fun bind(item: Character) {
+            character = item
             binding.character = item
         }
     }

@@ -1,8 +1,9 @@
 package br.com.samuelnunes.rickandmortyapp.ui.character
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import br.com.samuelnunes.rickandmortyapp.data.entities.Character
 import br.com.samuelnunes.rickandmortyapp.data.repository.CharacterRepository
@@ -13,5 +14,7 @@ class CharactersViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : ViewModel() {
 
-    val characters: LiveData<List<Character>> = characterRepository.getAllCharacters()
+    @ExperimentalPagingApi
+    fun characters(query: String): LiveData<PagingData<Character>> =
+        characterRepository.getCharacters(query).cachedIn(viewModelScope).asLiveData()
 }

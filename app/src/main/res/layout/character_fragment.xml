@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:nestedScrollingEnabled="false"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-    app:spanCount="1"
+    app:spanCount="@integer/rows_recycler"
     tools:itemCount="15"
     tools:background="@color/colorBackground"
     tools:context=".ui.characters.CharactersFragment"

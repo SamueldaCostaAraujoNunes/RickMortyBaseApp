@@ -2,6 +2,9 @@ package br.com.samuelnunes.rickandmortyapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import androidx.activity.viewModels
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -12,12 +15,14 @@ import androidx.navigation.ui.setupWithNavController
 import br.com.samuelnunes.rickandmortyapp.R
 import br.com.samuelnunes.rickandmortyapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,19 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main_activity, menu)
+        val item = menu!!.findItem(R.id.search)
+        item.setOnActionExpandListener(mainViewModel.onActionExpandListener)
+
+        mainViewModel.searchViewVisibility.observe(this) { item.isVisible = it}
+
+        val searchView = item.actionView as SearchView
+        searchView.setOnQueryTextListener(mainViewModel.onQueryTextListener)
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onSupportNavigateUp(): Boolean = navController.navigateUp(appBarConfiguration)
